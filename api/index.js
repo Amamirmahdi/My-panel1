@@ -10,11 +10,11 @@ export default async function handler(req, res) {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const path = url.pathname;
 
-    if (path === "/") {
+    if (path === "/api" || path === "/") {
       return res.status(200).send("Vercel OK");
     }
 
-    if (path === "/get") {
+    if (path === "/api/get") {
       const key = url.searchParams.get("key");
       const value = await redis.get(key);
 
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       });
     }
 
-    if (path === "/set") {
+    if (path === "/api/set") {
       const { key, value } = req.body || {};
       await redis.set(key, value);
 
